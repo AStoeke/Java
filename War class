@@ -1,0 +1,124 @@
+import java.util.Scanner;
+public class War
+{
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        PlayingCard myCard = new PlayingCard();
+        PlayingCard compCard = new PlayingCard();
+        int rounds, currentRound;
+        int myScore = 0;
+        int compScore = 0;
+        currentRound = 2;
+        String bleh;
+        boolean win, lose;
+        
+        myCard.shuffle();
+        compCard.shuffle();
+        
+        System.out.println("Please enter the number of rounds you would like to play.");
+        rounds = scan.nextInt();
+        bleh = scan.nextLine();
+        while (rounds < 0) {
+            System.out.println("Wrong! Good job, you wrongly answered a question I didn't think possible to get wrong!\n" +
+            "Try again, smart alec. ;)");
+            rounds = scan.nextInt();
+        }
+        
+        while(rounds == 0) {
+            System.out.println("Hey buddy. Try actually answering a question correctly for once in your life.");
+            rounds = scan.nextInt();
+            bleh = scan.nextLine();
+        }
+        
+        while(rounds > 0 && currentRound <= rounds + 1) {
+            System.out.println("ROUND " + (currentRound - 1));
+            System.out.println("----------------");
+            
+            System.out.println("Your card for this round is " + myCard);
+            System.out.println("The computer's card for this round is " + compCard);
+            
+            win = false;
+            lose = false;
+            if(myCard.getValue() > compCard.getValue()) {
+                myScore++;
+                System.out.println("You've won the round.\nYour score: " + myScore + "\nComputer Score: " + compScore + " \nPress enter to move on to the next battle.");
+                bleh = scan.nextLine();
+                win = false;
+                lose = true;
+            }
+            else if (myCard.getValue() < compCard.getValue()) {
+                compScore++;
+                System.out.println("Your troops returned wounded and badly beaten. You have lost this battle.\nYour score: " + myScore + "\nComputer Score: " + compScore + "\nPress enter to move on to the next battle.");
+                win = true;
+                lose = false;
+                bleh = scan.nextLine();
+            }
+            else{
+                System.out.println("The cards are drawn... A TIE IS REVEALED. The point reward for this round has been doubled! \nArmies, draw again! The stakes are high!");
+                myCard.shuffle();
+                compCard.shuffle();
+                win = false;
+                lose = false;
+                if(myCard.getValue() > compCard.getValue()) {
+                    System.out.println("The dust clears to reveal... YOU WON! Congratulations! You've won double the points!");
+                    myScore += 2;
+                    System.out.println("Your current score: " + myScore + "\nComputerScore: " + compScore + "\nPress enter to move on to the next battle.");
+                    win = false;
+                    lose = true;
+                    bleh = scan.nextLine();
+                }
+                else if(myCard.getValue() < compCard.getValue()) {
+                    System.out.println("The dust clears to reveal... Your army lay defeated... You did not earn double points, the enemy has gained them.");
+                    compScore += 2;
+                    System.out.println("Your current score: " + myScore + "\nComputerScore: " + compScore + "\nPress enter to move on to the next battle.");
+                    win = true;
+                    lose = false;
+                    bleh = scan.nextLine();
+                }
+                else {
+                    System.out.println("The cards have been drawn... Another tie??? \nWe will only give you two points instead of one, so don't get greedy. \n Let's try this again.");
+                    myCard.shuffle();
+                    compCard.shuffle();
+                    win = false;
+                    lose = false;
+                    if(myCard.getValue() > compCard.getValue()) {
+                    System.out.println("The dust clears to reveal... YOU WON! Congratulations! You've won double the points!");
+                    myScore += 2;
+                    System.out.println("Your current score: " + myScore + "\nComputerScore: " + compScore + "\nPress enter to move on to the next battle.");
+                    bleh = scan.nextLine();
+                    win = false;
+                    lose = true;
+                   }
+                    else  {
+                    System.out.println("The dust clears to reveal... Your army lay defeated... You did not earn double points, and the enemy has gained them.");
+                    compScore += 2;
+                    System.out.println("Your current score: " + myScore + "\nComputerScore: " + compScore + "\nPress enter to move on to the next battle.");
+                    win = true;
+                    lose = false;
+                    bleh = scan.nextLine();
+                   }
+                }
+            }
+            if(currentRound == 1 && win) {
+                compScore--;
+            }
+            else if (currentRound == 1 && lose) {
+                myScore--;
+            }
+            
+            currentRound++;
+            myCard.shuffle();
+            compCard.shuffle();
+            System.out.println("\f");
+        }
+        
+        if(myScore > compScore) {
+            System.out.println("Congratulations! You and your armies have won this war!");
+            System.out.println("Final scores: \nYour Score: " + myScore + "\nComputer Score: " + compScore);
+        }
+        else{
+            System.out.println("I'm sorry, but your armies have been defeated in this war. ");
+            System.out.println("Final scores: \nYour Score: " + myScore + "\nComputer Score: " + compScore);
+        }
+    }
+  }
